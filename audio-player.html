@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bollywood Audio Player</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: black; /* Set background to black */
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .audio-player {
+            background: linear-gradient(45deg, #ff4081, #42a5f5); /* Pink to blue gradient */
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 50%;
+            background-color: #ffffff; /* White button */
+            color: #ff4081; /* Pink text */
+            font-size: 24px;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .play-btn:hover {
+            background-color: #ff60a0; /* Light pink on hover */
+            transform: scale(1.1); /* Slightly grow button on hover */
+        }
+
+        .track-info {
+            margin: 15px 0;
+            font-size: 18px;
+        }
+
+        .song-list {
+            margin: 15px 0;
+            list-style: none;
+            padding: 0;
+        }
+
+        .song-list li {
+            cursor: pointer;
+            padding: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .song-list li:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="audio-player">
+    <div class="track-info">Now Playing: <span id="current-song">Select a song</span></div>
+    <audio id="audio" controls></audio>
+    <button class="play-btn" id="play-btn">►</button>
+    <ul class="song-list" id="song-list">
+        <li data-audio="C:\Users\keert\Downloads\Tum_Hi_Ho_-_Aashiqui_2_128_Kbps.mp3">Tum Hi Ho - Arijit Singh</li>
+        <li data-audio="C:\Users\keert\Downloads\Tera_Ban_Jaunga_-_Kabir_Singh_128_Kbps.mp3">Tera Ban Jaunga - Akhil Sachdeva</li>
+        <li data-audio="C:\Users\keert\Downloads\Kabira_(Encore)_-_Yeh_Jawaani_Hai_Deewani_128_Kbps.mp3">Kabira - Tochi Raina</li>
+        <li data-audio="C:\Users\keert\Downloads\pagalworld.com.mx-Channa Mereya.mp3">Channa Mereya - Arijit Singh</li>
+        <li data-audio="C:\Users\keert\Downloads\Raabta_-_Agent_Vinod_128_Kbps.mp3">Raabta - Arijit Singh</li>
+        <li data-audio="C:\Users\keert\OneDrive\Desktop\music\128-Humdard - Ek Villain 128 Kbps.mp3">Hamdard</li>
+        <li data-audio="C:\Users\keert\OneDrive\Desktop\music\Akhiyan Gulab(PagalWorld.com.tw).mp3">Akhiyan gulab</li>
+        <li data-audio="C:\Users\keert\OneDrive\Desktop\music\Khairiyat-Arijit-Singh.mp3">Khairiyat</li>
+        <li data-audio="C:\Users\keert\Downloads\Dil_Diyan_Gallan_-_Tiger_Zinda_Hai_128_Kbps.mp3">dil diyan gallan</li>
+        <li data-audio="C:\Users\keert\Downloads\Heeriye Heeriye Aa(PagalWorld.com.tw).mp3">Heeriye</li>
+    </ul>
+</div>
+
+<script>
+    const playButton = document.getElementById('play-btn');
+    const audio = document.getElementById('audio');
+    const currentSong = document.getElementById('current-song');
+    const songListItems = document.querySelectorAll('.song-list li');
+
+    // Function to set the selected song
+    function setSong(song) {
+        audio.src = song;
+        currentSong.innerText = songListItems[Array.from(songListItems).indexOf(this)].innerText;
+        audio.play();
+        playButton.innerHTML = '❚❚'; // Change to pause button
+    }
+
+    // Add click event to each song in the list
+    songListItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const song = this.getAttribute('data-audio');
+            setSong.call(this, song);
+        });
+    });
+
+    // Play/Pause functionality
+    playButton.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            playButton.innerHTML = '❚❚'; // Pause button
+        } else {
+            audio.pause();
+            playButton.innerHTML = '►'; // Play button
+        }
+    });
+
+    // Update play button and track info on audio end
+    audio.addEventListener('ended', () => {
+        playButton.innerHTML = '►'; // Play button
+    });
+</script>
+
+</body>
+</html>
